@@ -1,5 +1,10 @@
 function CircleCanvas (id, animationName)
 {
+	Line.prototype.canvas = this;
+	Circle.prototype.canvas = this;
+	CenterCircle.prototype.canvas = this;
+	Name.prototype.canvas = this;
+
 	this.addCirle = function (circle)
 	{
 		this.circles[this.circles.length] = circle;
@@ -14,10 +19,14 @@ function CircleCanvas (id, animationName)
 		{
 			this.circles[i].draw();
 		}
+
+		this.centerCircle.draw();
 	}
 
 	this.update = function ()
 	{
+		this.centerCircle.update();
+
 		var change = false;
 
 		for (var i = this.circles.length - 1; i >= 0; i--) 
@@ -51,18 +60,45 @@ function CircleCanvas (id, animationName)
 	this.canvas = document.getElementById(id);
 	this.context = this.canvas.getContext('2d');
 	this.position = getPosition(this.canvas);
-	this.circles = [];
 
 	this.centerX = this.canvas.width / 2;
 	this.centerY = this.canvas.height / 2;
-
-	Line.prototype.canvas = this;
-	Circle.prototype.canvas = this;
-	Name.prototype.canvas = this;
+	
+	this.circles = [];
+	this.centerCircle = new CenterCircle();
 
 	var canvas = this;
 	addEvent(this.canvas, 'mousemove', function(e){ canvas.mouseHandler(e); });
 	//setMotion(true, this.animationName);
+}
+
+function CenterCircle()
+{
+	this.radius = 50;
+	this.x = this.canvas.centerX;
+	this.y = this.canvas.centerY;
+
+	this.draw = function()
+	{
+		this.canvas.context.beginPath();
+		this.canvas.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+		this.canvas.context.fillStyle = 'white';
+		this.canvas.context.fill();
+
+		this.canvas.context.font = 'normal 16px ' + Name.prototype.font;
+		this.canvas.context.textBaseline = 'middle';
+		this.canvas.context.textAlign = 'center';
+		this.canvas.context.fillStyle = '#f9d92e';
+		this.canvas.context.fillText('MAU', this.x, this.y);
+	}
+
+	this.update = function()
+	{
+		for (var i = this.canvas.circles.length - 1; i >= 0; i--) 
+		{
+			this.canvas.circles[i].objectHandler(this.x, this.y);
+		}
+	}
 }
 
 function Line (x_from, y_from, x_to, y_to, width, color)
