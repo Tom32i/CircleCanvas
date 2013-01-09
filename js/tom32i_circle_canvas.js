@@ -197,18 +197,16 @@ function Name (content, color, size)
 
 		this.width = metrics.width;
 		this.height = this.size;
-
-		//console.log("%s : %o", this.content, this.width);
 	}
 }
 
-function Force(startX, startY, stopX, stopY)
+function Force(startX, startY, stopX, stopY, range)
 {
 	var d = new Date();
 	this.starttime = d.getTime();
 	//this.acceleration = 60; // pixel per second
-	this.distanceX = (Math.abs( startX - stopX ) / Circle.prototype.mouseDetectionRange) * ( this.speed / 1000 );
-	this.distanceY = (Math.abs( startY - stopY ) / Circle.prototype.mouseDetectionRange) * ( this.speed / 1000 );
+	this.distanceX = ( (range - Math.abs( startX - stopX )) / 20 ) * ( this.speed / 1000 );
+	this.distanceY = ( (range - Math.abs( startY - stopY )) / 20 ) * ( this.speed / 1000 );
 	this.startX = startX;
 	this.startY = startY;
 	this.signX = startX < stopX ? 1 : -1;
@@ -347,17 +345,15 @@ function Circle (x, y, width, color, content)
 		}
 	}
 
-	this.objectHandler = function(objX, objY, radius)
+	this.objectHandler = function(objX, objY)
 	{
-		if(typeof(radius) == "undefined") { radius = 0; }
-
 		var x = this.currentX - objX;
 		var y = this.currentY - objY;
-		var dist = Math.sqrt( Math.pow(x, 2) + Math.pow(y, 2) ) - ( radius + this.mouseDetectionRange );
+		var dist = Math.sqrt( Math.pow(x, 2) + Math.pow(y, 2) );
 
 		if(dist <= this.range)
 		{
-			this.forces[this.forces.length] = new Force(objX, objY, this.currentX, this.currentY);
+			this.forces[this.forces.length] = new Force(objX, objY, this.currentX, this.currentY, this.range);
 
 			setMotion(true, this.canvas.animationName);
 		}

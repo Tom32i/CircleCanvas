@@ -84,8 +84,8 @@ function getPosition(obj)
 Name.prototype.font = "Helvetica";
 Circle.prototype.nameDistance = 10; // MArge entre le cercle et le texte.
 Circle.prototype.mouseDetectionRange = 50; // Distance à laquelle les cercle interagissent.
-Force.prototype.acceleration = 25; // Valeur élévée : les cercle s'arrete plus vite.
-Force.prototype.speed = 500; // Valeur élévée : les cercles vont plus vite.
+Force.prototype.acceleration = 10; // Valeur élévée : les cercle s'arrete plus vite.
+Force.prototype.speed = 300; // Valeur élévée : les cercles vont plus vite.
 
 // Canvas creation
 var framerate = 0.06;
