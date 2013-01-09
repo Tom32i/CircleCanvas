@@ -63,7 +63,7 @@ function CircleCanvas (id, animationName)
 
 	this.centerX = this.canvas.width / 2;
 	this.centerY = this.canvas.height / 2;
-	
+
 	this.circles = [];
 	this.centerCircle = new CenterCircle();
 
@@ -166,24 +166,39 @@ function Name (content, color, size)
 	this.setSize = function (size)
 	{
 		this.size = size < 12 ? 12 : size;
+		this.metrics();
 	}
 
 	this.setColor = function (color)
 	{
 		this.color = color;
+		this.metrics();
 	}
 
 	this.setContent = function (content)
 	{
 		this.content = content;
+		this.metrics();
 	}
 
 	this.draw = function ()
 	{
 		this.canvas.context.font = 'normal ' + this.size + 'px ' + this.font;
 		this.canvas.context.textBaseline = 'middle';
+		this.canvas.context.textAlign = 'center';
 		this.canvas.context.fillStyle = this.color;
 		this.canvas.context.fillText(this.content, this.x, this.y);
+	}
+
+	this.metrics = function()
+	{
+		this.canvas.context.font = 'normal ' + this.size + 'px ' + this.font;
+		var metrics = this.canvas.context.measureText(this.content);
+
+		this.width = metrics.width;
+		this.height = this.size;
+
+		//console.log("%s : %o", this.content, this.width);
 	}
 }
 
@@ -191,11 +206,11 @@ function Force(startX, startY, stopX, stopY)
 {
 	var d = new Date();
 	this.starttime = d.getTime();
-	this.acceleration = 100; // pixel per second
+	//this.acceleration = 60; // pixel per second
+	this.distanceX = (Math.abs( startX - stopX ) / Circle.prototype.mouseDetectionRange) * ( this.speed / 1000 );
+	this.distanceY = (Math.abs( startY - stopY ) / Circle.prototype.mouseDetectionRange) * ( this.speed / 1000 );
 	this.startX = startX;
 	this.startY = startY;
-	this.distanceX = Math.abs( startX - stopX ) / 10;
-	this.distanceY = Math.abs( startY - stopY ) / 10;
 	this.signX = startX < stopX ? 1 : -1;
 	this.signY = startY < stopY ? 1 : -1;
 
@@ -225,7 +240,6 @@ function Force(startX, startY, stopX, stopY)
 		this.distanceX = newDistanceX;
 		this.distanceY = newDistanceY;
 
-		//this.distance = Math.sqrt( Math.pow( distanceX , 2) + Math.pow( distanceY , 2) );
 		return true;
 	}
 }
@@ -246,7 +260,35 @@ function Circle (x, y, width, color, content)
 
 		this.line.setTo(x, y);
 
-		this.name.setPosition( x + this.radius + 10 , y );
+		var rightBorder = x + this.name.width + this.radius + this.nameDistance;
+
+		if( rightBorder >= this.canvas.canvas.width || 
+			( 
+				x <= this.canvas.centerX
+				&& y >= this.canvas.centerY - this.canvas.centerCircle.radius - this.name.height
+				&& y <= this.canvas.centerY + this.canvas.centerCircle.radius + this.name.height
+				&& rightBorder >= this.canvas.centerCircle.x - this.canvas.centerCircle.radius
+			) 
+		)
+		{
+			// TEXT LEFT
+			var posX = x - (this.name.width / 2) - this.radius - this.nameDistance;
+			var posY = y;
+		}
+		else
+		{
+			// TEXT RIGHT
+			var posX = x + (this.name.width / 2) + this.radius + this.nameDistance;
+			var posY = y;
+		}
+
+		/*var posTopX = x - this.radius + (this.name.width / 2);
+		var posTopY = y - this.name.height - this.radius;*/
+
+		/*var posRightX = x + (this.name.width / 2) + this.radius + this.nameDistance;
+		var posRightY = y;*/
+
+		this.name.setPosition( posX, posY );
 
 		for (var i = this.canvas.circles.length - 1; i >= 0; i--) 
 		{
@@ -262,7 +304,7 @@ function Circle (x, y, width, color, content)
 	this.setWidth = function (width)
 	{
 		this.radius = Math.ceil(width / 2);
-		this.range = this.radius + 50; // mouse detection range
+		this.range = this.radius + this.mouseDetectionRange; // mouse detection range
 
 		this.name.setSize( Math.ceil( width / 5 ) );
 	}
@@ -305,11 +347,13 @@ function Circle (x, y, width, color, content)
 		}
 	}
 
-	this.objectHandler = function(objX, objY)
+	this.objectHandler = function(objX, objY, radius)
 	{
+		if(typeof(radius) == "undefined") { radius = 0; }
+
 		var x = this.currentX - objX;
 		var y = this.currentY - objY;
-		var dist = Math.sqrt( Math.pow(x, 2) + Math.pow(y, 2) );
+		var dist = Math.sqrt( Math.pow(x, 2) + Math.pow(y, 2) ) - ( radius + this.mouseDetectionRange );
 
 		if(dist <= this.range)
 		{

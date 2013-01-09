@@ -81,8 +81,11 @@ function getPosition(obj)
 }
 
 // Configuration 
-
 Name.prototype.font = "Helvetica";
+Circle.prototype.nameDistance = 10; // MArge entre le cercle et le texte.
+Circle.prototype.mouseDetectionRange = 50; // Distance à laquelle les cercle interagissent.
+Force.prototype.acceleration = 25; // Valeur élévée : les cercle s'arrete plus vite.
+Force.prototype.speed = 500; // Valeur élévée : les cercles vont plus vite.
 
 // Canvas creation
 var framerate = 0.06;
@@ -90,16 +93,28 @@ var animFrame = {
 	circleCanvas: {index: 0, loop: canvasLoop, motion: false}, 
 };
 var circleCanvas = new CircleCanvas("myCanvas", 'circleCanvas');
+var names = [
+    "Cherche un stage !", 
+    "PAO", 
+    "Motion Design", 
+    "Wordpress", 
+    "Photo", 
+    "Clarinette", 
+    "Programmation Web", 
+    "Audiovisuel", 
+    "Mise en page",
+    "Gestion de projet"
+];
 
 // Circles
-for (var i = 12; i >= 0; i--) 
+for (var i = names.length - 1; i >= 0; i--) 
 {
-    var width = Math.floor(Math.random() * 100) + 50;
+    var width = Math.floor(Math.random() * 75) + 50;
     var x = Math.floor( Math.random() * (circleCanvas.canvas.width - width * 2) + width);
     var y = Math.floor( Math.random() * (circleCanvas.canvas.height - width * 2) + width);
     var color = 'rgb(' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ')';
 
-    circleCanvas.addCirle( new Circle(x, y, width, color, 'Circle ' + i) );
+    circleCanvas.addCirle( new Circle(x, y, width, color, names[i]) );
 };
 
 /*circleCanvas.addCirle( new Circle(130, 90, 100, '#bd1050', 'Cherche un stage !') );
