@@ -124,13 +124,13 @@ for (var i = names.length - 1; i >= 0; i--)
 
 // MANUAL : new Circle(x, y, radius, color, title);
 
-circleCanvas.addCirle( new Circle(130, 90, 100, '#bd1050', 'Cherche un stage !') );
-circleCanvas.addCirle( new Circle(450, 150, 50, '#cbc16', 'PAO') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#00bc16', 'Motion Design') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b10016', 'Wordpress') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Photo') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#00bc16', 'Clarinette') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b10016', 'Programmation Web') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Audiovisuel') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Mise en page') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Gestion de projet') );
+circleCanvas.addCirle( new Circle(150, 50, 80, '#bd1550', 'Je cherche un stage !') );
+circleCanvas.addCirle( new Circle(340, 150, 35, '#b1bc1b', 'PAO') );
+circleCanvas.addCirle( new Circle(460, 100, 20, '#e97f02', 'Motion Design') );
+circleCanvas.addCirle( new Circle(660, 120, 60, '#b1bc1b', 'Wordpress') );
+circleCanvas.addCirle( new Circle(610, 250, 40, '#bd1550', 'Photo') );
+circleCanvas.addCirle( new Circle(640, 320, 30, '#490a3d', 'Clarinette') );
+circleCanvas.addCirle( new Circle(530, 420, 60, '#b1bc1b', 'Programmation Web') );
+circleCanvas.addCirle( new Circle(240, 390, 70, '#e97f02', 'Audiovisuel') );
+circleCanvas.addCirle( new Circle(130, 350, 50, '#bd1550', 'Mise en page') );
+circleCanvas.addCirle( new Circle(50, 230, 60, '#490a3d', 'Gestion de projet') );
