@@ -93,7 +93,10 @@ var animFrame = {
 	circleCanvas: {index: 0, loop: canvasLoop, motion: false}, 
 };
 var circleCanvas = new CircleCanvas("myCanvas", 'circleCanvas');
-var names = [
+
+/* RANDOM :
+
+ var names = [
     "Cherche un stage !", 
     "PAO", 
     "Motion Design", 
@@ -115,15 +118,19 @@ for (var i = names.length - 1; i >= 0; i--)
     var color = 'rgb(' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ', ' + Math.floor(Math.random() * 255) + ')';
 
     circleCanvas.addCirle( new Circle(x, y, width, color, names[i]) );
-};
+};*/
 
-/*circleCanvas.addCirle( new Circle(130, 90, 100, '#bd1050', 'Cherche un stage !') );
+
+
+// MANUAL : new Circle(x, y, radius, color, title);
+
+circleCanvas.addCirle( new Circle(130, 90, 100, '#bd1050', 'Cherche un stage !') );
 circleCanvas.addCirle( new Circle(450, 150, 50, '#cbc16', 'PAO') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#00bc16', 'circle 1') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b10016', 'circle 2') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'circle 3') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#00bc16', 'circle 1') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b10016', 'circle 2') );
-circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'circle 3') );*/
-
-//setTimeout(function(){ circleCanvas.circles[0].setNewPosition(700, 400); }, 1000);
+circleCanvas.addCirle( new Circle(450, 150, 80, '#00bc16', 'Motion Design') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#b10016', 'Wordpress') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Photo') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#00bc16', 'Clarinette') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#b10016', 'Programmation Web') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Audiovisuel') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Mise en page') );
+circleCanvas.addCirle( new Circle(450, 150, 80, '#b1bc00', 'Gestion de projet') );
